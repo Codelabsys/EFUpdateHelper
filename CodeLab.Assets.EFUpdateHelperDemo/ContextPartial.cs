@@ -17,10 +17,10 @@ namespace CodeLab.Assets.EFUpdateHelperDemo
 
         protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, IDictionary<object, object> items)
         {
-            //Let entity do validations
+            //Let entity do validations.
             var result = base.ValidateEntity(entityEntry, items);
 
-            //then lets remove errors related to unchanged properties
+            //Then remove errors related to unchanged properties.
             return this.RemoveEFFalseAlarms(result, entityEntry);
         }
     }

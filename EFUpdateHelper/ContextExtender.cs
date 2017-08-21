@@ -36,7 +36,7 @@ namespace CodeLab.Assets.EFUpdateHelper
             {
                 //now safe to attach since it is either not loaded , or detached
                 dbEntitySet.Attach(entity);
-                DbEntityEntry<TEntity> entry = context.Entry(entity);
+               
             }
         }
 
@@ -72,6 +72,7 @@ namespace CodeLab.Assets.EFUpdateHelper
         public static DbEntityValidationResult RemoveEFFalseAlarms(this DbContext context, DbEntityValidationResult result,
             DbEntityEntry entityEntry)
         {
+            //This function doesn't do anything unless AllowAll is the mode
 
             IDirectUpdateContext directContext = context as IDirectUpdateContext;
 
@@ -79,7 +80,7 @@ namespace CodeLab.Assets.EFUpdateHelper
             {
                 UpdateMode? mode = directContext.CurrentSaveOperationMode;
 
-                if (mode.HasValue && mode.Value == UpdateMode.Allow)
+                if (mode.HasValue && mode.Value == UpdateMode.Allow) 
                 {
 
                     List<DbValidationError> errorsToIgnore = new List<DbValidationError>();
@@ -93,12 +94,13 @@ namespace CodeLab.Assets.EFUpdateHelper
                             {
                                 if (!property.IsModified)
                                 {
+                                    //Add errors that resulted from not changing all the attributes
                                     errorsToIgnore.Add(error);
                                 }
                             }
                         }
                     }
-
+                    //Then the errors are ignored
                     errorsToIgnore.ForEach(e => result.ValidationErrors.Remove(e));
                 }
             }
@@ -112,7 +114,7 @@ namespace CodeLab.Assets.EFUpdateHelper
             string className = typeof(T).Name;
             IObjectContextAdapter adapter = context as IObjectContextAdapter;
 
-            //get context defaultmeta container
+            //Get context default meta container
             EntityContainer container = adapter.ObjectContext.MetadataWorkspace.
                 GetEntityContainer(adapter.ObjectContext.DefaultContainerName,
                 DataSpace.CSpace);

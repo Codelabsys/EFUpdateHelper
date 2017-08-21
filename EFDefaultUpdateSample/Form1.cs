@@ -66,9 +66,10 @@ namespace CodeLab.Assets.EFDefaultUpdateSample
                 ctx.ChangeTracker.DetectChanges();
 
                  entry = ctx.Entry(b);
+                
 
 
-                //This is how the entry will look  like now
+                //This is how the entry will look like now
                 //entry.State = EntityState.Modified;
                 //entry.Property("ID").IsModified = false;
                 //entry.Property("Author").IsModified = true;
@@ -81,7 +82,7 @@ namespace CodeLab.Assets.EFDefaultUpdateSample
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
-                // will crash in EF and wil not even reach SQL server since Name prop is null while it is mandatory in Metadata
+                // Will crash in EF and wil not even reach SQL server since Name prop is null while it is mandatory in Metadata
             }
         }
     }
