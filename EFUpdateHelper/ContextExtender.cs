@@ -20,10 +20,11 @@ namespace CodeLab.Assets.EFUpdateHelper
 
             if (directContext != null)
             {
+                //Set the mode either to Allow or Prevent
                 directContext.CurrentSaveOperationMode = updatemode;
 
             }
-
+            //Default EF SaveChanges
             int result = context.SaveChanges();
             return result;
 
@@ -34,7 +35,7 @@ namespace CodeLab.Assets.EFUpdateHelper
         {
             if (!context.GetLoadedEntityIfAny(ref entity))
             {
-                //now safe to attach since it is either not loaded , or detached
+                //Now safe to attach since it is either not loaded , or detached
                 dbEntitySet.Attach(entity);
                
             }
@@ -55,15 +56,15 @@ namespace CodeLab.Assets.EFUpdateHelper
             {
                 if (entry.State == EntityState.Detached)
                 {
-                    //if the entity is already loaded but has been detatched
+                    //If the entity is already loaded but has been detatched
                     shouldAttach = true;
                 }
-                //if the object originally exist on the context return it
+                //If the object originally exist on the context return it
                 entity = (TEntity)entry.Entity;
             }
             else
             {
-                //object does not exist on the context
+                //Object does not exist on the context
                 shouldAttach = true;
             }
             return !shouldAttach;
